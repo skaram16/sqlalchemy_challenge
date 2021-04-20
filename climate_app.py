@@ -18,5 +18,47 @@ Measurement = Base.classes.measurement
 Station = Base.classes.station
 
 session = Session(engine)
+
+#weather app
 app = Flask(__name__)
 
+
+recent_date = session.query(Measurement.date).order_by(Measurement.date.desc()).first()
+
+recent_date = list(np.ravel(recent_Date))[0]
+recent_date = dt.datetime.strptime(recent_date, '%Y-%m-%d')
+recent_year = int(dt.datetime.strftime(recent_date, '%Y')
+recent_month = int(dt.datetime.strftime(recent_date, '%m')
+recent_day = int(dt.datetime.strftime(recent_date, '%d')
+                 
+year_before = dt.date(recent_year, recent_month, recent_day) - dt.timedelta(days=365)
+year_before = dt.datetime(strftime(year_before, '%Y-%m-%d')
+                          
+                          
+                          
+                          
+@app.route("/")
+def home():
+    return(f'"Welcome to Surf's Up!: Hawai'i Climate API<br/>"
+            f"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~<br/>"
+            f"Available Routes:<br/>"
+            f"/api/v1.0/stations ~~~~~ a list of all weather observation stations<br/>"
+            f"/api/v1.0/precipitaton ~~ the latest year of preceipitation data<br/>"
+            f"/api/v1.0/temperature ~~ the latest year of temperature data<br/>"
+            f"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~<br/>"
+            f"~~~ datesearch (yyyy-mm-dd)<br/>"
+            f"/api/v1.0/datesearch/2015-05-30  ~~~~~~~~~~~ low, high, and average temp for date given and each date after<br/>"
+            f"/api/v1.0/datesearch/2015-05-30/2016-01-30 ~~ low, high, and average temp for date given and each date up to and including end date<br/>"
+            f"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~<br/>"
+            f"~ data available from 2010-01-01 to 2017-08-23 ~<br/>"
+            f"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+                          
+@app.route("/api/v1.0/stations")
+def stations():
+     results = session.query(Station.name).all()
+     all_stations = list(np.ravel(results))
+     return jsonify(all_stations)
+                          
+@app.route("/api/v1.0/precipitation")
+def precipitation():
+                          
